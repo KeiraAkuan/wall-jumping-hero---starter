@@ -71,9 +71,18 @@ let leftFacingImg = img`
     . . . . f f f . . . f f . . . . 
     `
 controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
-if (player.isHittingTile(CollisionDirection.Bottom)) {
-    player.vy = -250
+if (player.isHittingTile(CollisionDirection.Bottom)) 
+player.vy = -250
 
+
+
+
+if player.isHittingTile(CollisionDirection.Left)() {
+
+}
+game.onUpdateInterval(500, function() {
+    
+})
 }
   
 })
