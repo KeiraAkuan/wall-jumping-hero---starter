@@ -70,11 +70,17 @@ let leftFacingImg = img`
     . . . f f f f f f f f f f . . . 
     . . . . f f f . . . f f . . . . 
     `
+controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
+if (player.isHittingTile(CollisionDirection.Bottom)) {
+    player.vy = -250
 
+}
+  
+})
 
     tiles.setTilemap(tilemap`level1`)
 let player = sprites.create(leftFacingImg,SpriteKind.Player)
-controller.moveSprite(player)
+controller.moveSprite(player,150,0)
 
 controller.right.onEvent(ControllerButtonEvent.Pressed, function() {
     player.setImage(rightFacingImg)
@@ -84,3 +90,4 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function() {
     })
     scene.cameraFollowSprite(player)
     tiles.placeOnTile(player, tiles.getTileLocation(3, 30))
+    player.ay = 300
