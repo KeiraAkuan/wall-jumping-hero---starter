@@ -1,3 +1,17 @@
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (player.isHittingTile(CollisionDirection.Bottom) || player.isHittingTile(CollisionDirection.Left) || player.isHittingTile(CollisionDirection.Right)) {
+        player.vy = -250
+    }
+})
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    player.setImage(leftFacingImg)
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    player.setImage(rightFacingImg)
+})
+let player: Sprite = null
+let leftFacingImg: Image = null
+let rightFacingImg: Image = null
 let rightSwordOutImg = img`
     . . . . . . . f f . . . . . . . 
     . . . . f f f f 2 f f . . . . . 
@@ -34,7 +48,7 @@ let leftSwordOutImg = img`
     . . c . . . f f f f f f f f . . 
     . . . . . . . f f . . f f f . . 
     `
-let rightFacingImg = img`
+rightFacingImg = img`
     . . . . . . . . . . . . . . . . 
     . . . . . f f f f f f . . . . . 
     . . . f f e e e e f 2 f . . . . 
@@ -52,7 +66,7 @@ let rightFacingImg = img`
     . . . f f f f f f f f f f . . . 
     . . . . f f . . . f f f . . . . 
     `
-let leftFacingImg = img`
+leftFacingImg = img`
     . . . . . . . . . . . . . . . . 
     . . . . . f f f f f f . . . . . 
     . . . . f 2 f e e e e f f . . . 
@@ -70,33 +84,23 @@ let leftFacingImg = img`
     . . . f f f f f f f f f f . . . 
     . . . . f f f . . . f f . . . . 
     `
-controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
-if (player.isHittingTile(CollisionDirection.Bottom)) 
-player.vy = -250
-
-
-
-
-if player.isHittingTile(CollisionDirection.Left)() {
-
-}
-game.onUpdateInterval(500, function() {
-    
+tiles.setTilemap(tilemap`level1`)
+player = sprites.create(leftFacingImg, SpriteKind.Player)
+controller.moveSprite(player, 150, 0)
+scene.cameraFollowSprite(player)
+tiles.placeOnTile(player, tiles.getTileLocation(3, 30))
+player.ay = 300
+game.onUpdateInterval(100, function () {
+    if (player.isHittingTile(CollisionDirection.Right)) {
+        player.setImage(rightSwordOutImg)
+        player.ay = 0
+        player.vy = 15
+    }
+    if (player.isHittingTile(CollisionDirection.Left)) {
+        player.setImage(leftSwordOutImg)
+        player.ay = 0
+        player.vy = 15
+    } else {
+        player.ax = 300
+    }
 })
-}
-  
-})
-
-    tiles.setTilemap(tilemap`level1`)
-let player = sprites.create(leftFacingImg,SpriteKind.Player)
-controller.moveSprite(player,150,0)
-
-controller.right.onEvent(ControllerButtonEvent.Pressed, function() {
-    player.setImage(rightFacingImg)
-    })
-    controller.left.onEvent(ControllerButtonEvent.Pressed, function() {
-    player.setImage(leftFacingImg)
-    })
-    scene.cameraFollowSprite(player)
-    tiles.placeOnTile(player, tiles.getTileLocation(3, 30))
-    player.ay = 300
